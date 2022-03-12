@@ -1,5 +1,5 @@
 FROM gentoo/portage:latest as portage
-FROM gentoo/stage3:desktop as production
+FROM gentoo/stage3 as production
 
 COPY --from=portage /var/db/repos/gentoo/ /var/db/repos/gentoo
 COPY gentoo.conf /etc/portage/repos.conf/
@@ -21,6 +21,7 @@ RUN set -eux;                                                                   
         app-portage/mgorny-dev-scripts                                                      \
         app-portage/portage-utils                                                           \
         app-portage/repoman                                                                 \
+        app-portage/nattka                                                                  \
         app-misc/jq                                                                         \
         app-misc/neofetch                                                                   \
         dev-python/pip                                                                      \
