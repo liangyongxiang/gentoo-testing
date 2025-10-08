@@ -2,7 +2,6 @@ FROM gentoo/portage:latest as portage
 FROM gentoo/stage3 as production
 
 COPY --from=portage /var/db/repos/gentoo/ /var/db/repos/gentoo
-COPY gentoo.conf /etc/portage/repos.conf/
 
 WORKDIR /
 ENV PATH="/root/.local/bin:${PATH}"
@@ -31,14 +30,9 @@ RUN set -eux;                                                                   
         dev-vcs/git;                                                                        \
                                                                                             \
     rm --recursive /var/db/repos/gentoo;                                                    \
-    emerge --sync gentoo;                                                                   \
-    emerge --info;                                                                          \
-                                                                                            \
-    eix-update;                                                                             \
-    pkgcheck cache --update --repo gentoo;                                                  \
-                                                                                            \
+    eselect repository add gentoo git https://github.com/gentoo-mirror/gentoo.git;                                                       \
     eselect repository enable gentoo-zh;                                                    \
-    emerge --sync gentoo-zh;                                                                \
+    emerge --sync;                                                                \
     emerge --verbose --quiet --jobs $(nproc) --autounmask y --autounmask-continue y         \
         dev-python/nvchecker;                                                               \
     eselect repository remove -f gentoo-zh;                                                 \
