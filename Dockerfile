@@ -1,5 +1,5 @@
 FROM gentoo/portage:latest as portage
-FROM gentoo/stage3 as production
+FROM gentoo/stage3:amd64-desktop-systemd as production
 
 COPY --from=portage /var/db/repos/gentoo/ /var/db/repos/gentoo
 
