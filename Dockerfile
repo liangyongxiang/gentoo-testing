@@ -30,9 +30,11 @@ RUN set -eux;                                                                   
         dev-vcs/git;                                                                        \
                                                                                             \
     rm --recursive /var/db/repos/gentoo;                                                    \
-    eselect repository add gentoo git https://github.com/gentoo-mirror/gentoo.git;                                                       \
+    eselect repository add gentoo git https://github.com/gentoo-mirror/gentoo.git;          \
     eselect repository enable gentoo-zh;                                                    \
-    emerge --sync;                                                                \
+    emerge --sync;                                                                          \
+    emerge --verbose --quiet --jobs $(nproc) --autounmask y --autounmask-continue y --update\
+        --deep --newuse @world;                                                             \
     emerge --verbose --quiet --jobs $(nproc) --autounmask y --autounmask-continue y         \
         dev-python/nvchecker;                                                               \
     eselect repository remove -f gentoo-zh;                                                 \
